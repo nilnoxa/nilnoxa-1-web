@@ -13,20 +13,14 @@ export function formatDate(dateString: string) {
 
 // Decode HTML entities
 export function decodeHtmlEntities(html: string) {
-  if (typeof window === "undefined") {
-    // Server-side rendering
-    return html
-      .replace(/&lt;/g, "<")
-      .replace(/&gt;/g, ">")
-      .replace(/&amp;/g, "&")
-      .replace(/&quot;/g, '"')
-      .replace(/&#039;/g, "'")
-  } else {
-    // Client-side rendering
-    const txt = document.createElement("textarea")
-    txt.innerHTML = html
-    return txt.value
-  }
+  return html
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&amp;/g, "&")
+    .replace(/&quot;/g, '"')
+    .replace(/&#039;/g, "'")
+    .replace(/&#x2F;/g, "/")
+    .replace(/&nbsp;/g, " ")
 }
 
 // Remove HTML tags from string

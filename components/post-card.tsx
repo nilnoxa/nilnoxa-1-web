@@ -1,6 +1,6 @@
 import Image from "next/image"
 import Link from "next/link"
-import { formatDate } from "@/lib/utils"
+import { formatDate, decodeHtmlEntities, stripHtml } from "@/lib/utils"
 
 interface PostCardProps {
   post: any
@@ -19,7 +19,7 @@ export default function PostCard({ post, variant = "light" }: PostCardProps) {
   const excerpt = decodeHtmlEntities(post.excerpt.rendered)
 
   // Remove HTML tags from excerpt
-  const cleanExcerpt = excerpt.replace(/<\/?[^>]+(>|$)/g, "")
+  const cleanExcerpt = stripHtml(excerpt)
 
   return (
     <Link
@@ -43,11 +43,4 @@ export default function PostCard({ post, variant = "light" }: PostCardProps) {
       </div>
     </Link>
   )
-}
-
-// Helper function to decode HTML entities
-function decodeHtmlEntities(html: string) {
-  const txt = document.createElement("textarea")
-  txt.innerHTML = html
-  return txt.value
 }
